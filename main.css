@@ -1,23 +1,26 @@
 body{
   background-color: darkgray;
-}
-#duckCards{
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-#duck{
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid black;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   text-align: center;
-
-
+  
 }
-#duck img{
+h1{
+  background-color: cadetblue;
+}
+.container{
+  align-items: center;
+  
+  
+}
+.card{
+  display: flex;
+  align-items: center;
+  
+  
+}
+.card img{
   width: 200px;
   height: 200px;
+}
+.btn-group{
+  margin: 10px;
 }
