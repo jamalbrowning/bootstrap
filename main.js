@@ -66,7 +66,7 @@ const ducks = [
     color:'Brown',
     name:'Nestera',
     breed:'Alabio',
-    size:'small', // one of : small, medium, large
+    size:'medium', // one of : small, medium, large
     temeperament:'calm',
     imageUrl:'https://www.learnnaturalfarming.com/wp-content/uploads/2020/03/Alabio-duck.jpg',
     gender:'female',
@@ -104,23 +104,70 @@ const printToDom = (selector, textToPrint) => {
 
 //shorten this
   const duckCardsBuilder = (array) => {
-    let domString = ''
+    let domString = '<div class="row">'
     for (let i = 0; i < array.length; i++){
-      domString += `<div class= "${array[i].breed}" id = "duck">
-                      <img src="${array[i].imageUrl}" alt="${array[i].name} ">
-                      <h3>${array[i].name}</h3>
-                      <h3>${array[i].breed}</h3>
-                      <h3>${array[i].size}</h3>
-                      <h3>${array[i].temeperament}</h3>
-                      <h3>${array[i].gender}</h3>
-                      <h3>${array[i].age}</h3>
-                      <h3>${array[i].isRubber}</h3>
-                    </div>`;
+      domString += `<div class="card border-secondary mb-3 col-4 mt-2 " >
+                      <img src="${array[i].imageUrl}" class="card-img-top" alt="${array[i].name}">
+                        <div class="card-body">
+                          <h5 class="card-title">${array[i].name}</h5>                    
+                        </div>
+                        <div class="card" style="width: 18rem;">
+                          <ul class="list-group list-group-flush">
+                             <li class="list-group-item">${array[i].breed}</li>
+                            <li class="list-group-item">${array[i].temeperament}</li>
+                            <li class="list-group-item">${array[i].age}</li>
+                            </ul>
+                        </div>
+                     </div>`
+    
     }
+    
     printToDom('#duckCards', domString)
   }
+const filterEvent = (event) => {
+  const buttonId = event.target.id
+  const tempDuckCollection = [];
+
+  if (buttonId === 'all') {
+    duckCardsBuilder(ducks);
+    return;
+  }
+    
+  for (let i = 0; i < ducks.length; i++){
+    if(ducks[i].size === buttonId) {
+      tempDuckCollection.push(ducks[i])
+    } 
+  }
+  for (let i = 0; i < ducks.length; i++){
+    if(ducks[i].gender === buttonId) {
+      tempDuckCollection.push(ducks[i])
+    } 
+  }
+  for (let i = 0; i < ducks.length; i++){
+    if(ducks[i].isRubber ) {
+      tempDuckCollection.push(ducks[i])
+    } 
+    if (!ducks[i].isRubber && event.target.id === 'real' ){
+      tempDuckCollection.push(ducks[i])
+    }
+  }
+  
+  duckCardsBuilder(tempDuckCollection);
+}
+
+const clickEvents = () => {
+  document.querySelector('#small').addEventListener('click', filterEvent)
+  document.querySelector('#medium').addEventListener('click', filterEvent)
+  document.querySelector('#large').addEventListener('click', filterEvent)
+  document.querySelector('#all').addEventListener('click', filterEvent)
+  document.querySelector('#male').addEventListener('click', filterEvent)
+  document.querySelector('#female').addEventListener('click', filterEvent)
+  document.querySelector('#rubber').addEventListener('click', filterEvent)
+  document.querySelector('#real').addEventListener('click', filterEvent)
+}
 
   const init = () => {
-    duckCardsBuilder(ducks)
+    duckCardsBuilder(ducks);
+    clickEvents();
   }
 init()
